@@ -2,15 +2,18 @@
   
 <suite name="test" verbose="1" >
   <test name="one script" >
+  
   <!--groups>
-  <run>
-  <include name = "login"/>
-  </run>
+    <run>
+      <include name="login" />
+    </run>
   </groups-->
   
   <packages>
-  	<package name= "test" />
-  	</packages>
+  	<package name= "test.cdd"/>
+  </packages>
+  	
+  	
     <!--classes>
        <class name="test.login.TNGAnnotations"/>                    
     </classes-->
