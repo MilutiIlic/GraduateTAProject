@@ -1,11 +1,6 @@
 package lib.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 public class Verification {
-
-	//protected static final Log log = LogFactory.getLog("seleniumTestSuite");
 
 	private static final String VERIFICATION = 	"------------------------------ VERIFICATION ------------------------------";
 	private static final String TITLE = 		"\tTitle:    ";
@@ -40,7 +35,7 @@ public class Verification {
 	 *            title
 	 */
 	public static void verifyString(String expected, String actual, String title) {
-		boolean b = expected.equals(actual);
+		boolean b = actual.contains(expected);
 		print(expected, actual, title, b);
 	}
 

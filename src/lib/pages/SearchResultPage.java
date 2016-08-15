@@ -1,25 +1,34 @@
 package lib.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.server.browserlaunchers.Sleeper;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class SearchResultPage {
+import lib.data.Property;
 
+public class SearchResultPage extends Page{
 	
 	@FindBy(linkText = "Career Development Discussion")
 	private WebElement cddLink;
 	
-	private WebDriver driver;
+	@FindBy(css = "#region-main *[role='main'] h2")
+	private WebElement searchResultsLabel;
+	
+	private By bySearchResultsLabel = new By.ByCssSelector("#region-main *[role='main'] h2");
+	
 	public SearchResultPage(WebDriver driver){
-		this.driver = driver;
-		Sleeper.sleepTightInSeconds(5);
-		PageFactory.initElements(driver, this);
+		super(driver);
+		waitForPageToBeLoaded(driver, bySearchResultsLabel, Property.TIME_SHORT);
 	}
-	public CDDPage clickOnCddLink(){
+
+	/**
+	 * Click on Career Development Discussion link
+	 * @return {CDDPage}
+	 */
+	public CDDPage clickOnCDDLink(){
 		cddLink.click();
 		return new CDDPage(driver);
 	}
+	
 }

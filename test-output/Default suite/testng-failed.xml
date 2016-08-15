@@ -3,16 +3,13 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="test1.DomaciTest1">
+      <class name="test.login.CheckBoxFunctionality">
         <methods>
-          <include name="test1"/>
-          <include name="afterMethod"/>
-          <include name="beforeMethod"/>
-          <include name="test"/>
-          <include name="beforeClass"/>
           <include name="afterClass"/>
+          <include name="login"/>
+          <include name="beforeClass"/>
         </methods>
-      </class> <!-- test1.DomaciTest1 -->
+      </class> <!-- test.login.CheckBoxFunctionality -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

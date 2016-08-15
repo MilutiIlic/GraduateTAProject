@@ -31,7 +31,7 @@
 	</target>
 	
 	<!-- Compile the java code from ${src} into ${bin} -->
-	<target name="compile" depends="create">
+	<target name="build" depends="create">
 		<javac srcdir="${src}" classpathref="classpath"  destdir="${bin}" />
 		<echo> Ant Compiled Directory Classes  </echo>
 	</target>
@@ -39,7 +39,7 @@
 	<!-- Runs the file and generates Reportng report for TestNG-->
 	<taskdef name="testng" classname="org.testng.TestNGAntTask" classpathref="classpath" />
 	
-	<target name="build" depends="compile">
+	<target name="test"> <!--depends="compile"-->
 		<mkdir dir="${testng-report-dir}" />
 		<testng outputdir="${testng-report-dir}" classpathref="classpath"><!--includeAntRuntime="No" useDefaultListeners="true"-->
 			<xmlfileset dir="${basedir}" includes="testng.xml" />

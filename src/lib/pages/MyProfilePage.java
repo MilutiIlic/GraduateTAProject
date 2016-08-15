@@ -1,50 +1,40 @@
 package lib.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.server.browserlaunchers.Sleeper;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import lib.data.Property;
 
-public class MyProfilePage {
-
+public class MyProfilePage extends Page{
 	
-
-	@FindBy(css = "a[href*='mailto']")
-	private WebElement myemail;
+	@FindBy(xpath = "//a[contains(@href, 'mailto')]")
+	private WebElement emailLabel;
 	
-	//@FindBy(xpath="//a[contains(@href,'mailto')]")
-	//private WebElement MyEmail;
+	@FindBy (linkText = "Career Development Discussion")
+	private WebElement areaLabel;
 	
-	@FindBy(linkText = "Career Development Discussion")
-	private WebElement myarea;
+	private By byEmailLabel = new By.ByXPath("//a[contains(@href, 'mailto')]");
 	
-	@FindBy(linkText= "Log Out")
-	private WebElement LogOutLink;
-	
-	private WebDriver driver;
-	
-	public MyProfilePage(WebDriver driver) {
-	
-		this.driver = driver;
-		Sleeper.sleepTightInSeconds(5);
-		PageFactory.initElements(driver, this);
+	public MyProfilePage(WebDriver driver){
+		super(driver);
+		waitForPageToBeLoaded(driver, byEmailLabel, Property.TIME_SHORT);
 	}
 	
-	public String getTextForEmail(){
-		myemail.getText();
-		return myemail.getText();
+	/**
+	 * Get text from email label
+	 * @return {String}
+	 */
+	public String getEmailAdress(){		
+		return emailLabel.getText();
+
 	}
-	
-	public String getTextforMyArea(){
-		myarea.getText();
-		return myarea.getText();
-	}
-	
-	public LoginPage clickOnLogOutLink(){
-		LogOutLink.click();
-		Sleeper .sleepTightInSeconds(3);
-		return new LoginPage(driver);
+	/**
+	 * Get text from area label
+	 * @return{String}
+	 */
+	public String getAreaLabel(){		
+		return areaLabel.getText();
 	}
 	
 }

@@ -1,66 +1,62 @@
 package lib.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.server.browserlaunchers.Sleeper;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class CDDPage {
+import lib.data.Property;
 
-	@FindBy(xpath = "//input[contains(@title,'CDD Animation Scripts')]")
+public class CDDPage extends Page{
+
+	@FindBy(xpath = "//input[contains(@title, 'CDD Animation Scripts')]")
 	private WebElement firstCheckBox;
 	
-	@FindBy(linkText= "Log Out")
-	private WebElement LogOutLink;
-	
-	private WebDriver driver;
-	//konstruktor
-	public CDDPage(WebDriver driver){
-		this.driver = driver;
-		Sleeper.sleepTightInSeconds(5);
-		PageFactory.initElements(driver,this);
+	private By byFirstCheckBox = new By.ByXPath("//input[contains(@title, 'CDD Animation Scripts')]");
+
+	public CDDPage(WebDriver driver) {
+		super(driver);
+		waitForPageToBeLoaded(driver, byFirstCheckBox, Property.TIME_SHORT);
 	}
-	
+
 	/**
 	 * Check on first check box
+	 * 
 	 * @return {CDDPage}
 	 */
-	public CDDPage checkFirstCheckBox(){
-		if(!isFirstCheckBoxSelected()){
-		firstCheckBox.click();
-		}
-		Sleeper.sleepTightInSeconds(2);
+	public CDDPage checkFristCheckBox() {
+		if (!isFirstCheckBoxSelected()) {
+			firstCheckBox.click();
+			Sleeper.sleepTightInSeconds(2);
+		}		
 		return this;
 	}
 	
-	public CDDPage uncheckFirstCheckBox(){
-		if(isFirstCheckBoxSelected()){
-		firstCheckBox.click();
-		}
-		Sleeper.sleepTightInSeconds(2);
+	/**
+	 * Uncheck on first check box
+	 * 
+	 * @return {CDDPage}
+	 */
+	public CDDPage uncheckFristCheckBox() {
+		if (isFirstCheckBoxSelected()) {
+			firstCheckBox.click();
+			Sleeper.sleepTightInSeconds(2);
+		}		
 		return this;
 	}
+
 	/**
-	 * Is first box selected
-	 * @return boolean
+	 * Is first check box selected
+	 * 
+	 * @return {boolean}
 	 */
-	public boolean isFirstCheckBoxSelected(){
+	public boolean isFirstCheckBoxSelected() {
 		String attributeValue = firstCheckBox.getAttribute("title");
-		if(attributeValue.contains("Mark as not complete")){
+		if (attributeValue.contains("Mark as not complete")) {
 			return true;
-		}else return false;
+		} else
+			return false;
 	}
-	
-	/**
-	 * Click on Log Out link to logout
-	 * @return {LogIn}
-	 */
-	public LoginPage clickOnLogOutLink(){
-		LogOutLink.click();
-		Sleeper .sleepTightInSeconds(3);
-		return new LoginPage(driver);
-	}
-	
-	
+
 }

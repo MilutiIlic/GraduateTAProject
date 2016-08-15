@@ -1,95 +1,121 @@
 package lib.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.By.ByXPath;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.server.browserlaunchers.Sleeper;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class HomePage {
+import lib.data.Property;
+import lib.util.Wait;
 
-	
-	@FindBy(className = "shortsearchbox")
-	private WebElement searhInputField;
-	
-	//@FindBy(css = "input[type = 'submit'][value='Go']")
-	@FindBy(xpath="//input[contains(@value,'Go') and contains(@type,'submit')]")
-	private WebElement goButton; 
-	
-	@FindBy(xpath="//a[contains(@title,'My Account')]")
-	private WebElement MyAccount; 
-	
-	@FindBy(xpath="//a[contains(@title,'My Profile')]")
-	private WebElement MyProfile; 
-	
-	@FindBy(xpath="//a[contains(@title,'Endava University')]")
-	private WebElement EndavaUniversity; 
-	
-	@FindBy(xpath="//a[contains(@title,'Internal systems self help')]")
-	private WebElement InternaSystemsSelfHelp; 
-	
-	//private By goBtn = new By.ByXPath("//input[contains(@value,'Go') and contains(@type,'submit')]");
-	
-	@FindBy(className = "logininfo")
-	private WebElement loginInfoLabel;
-	
-	private WebDriver driver;
+public class HomePage extends Page {
 
-	
-	
-	//konstruktor nikada ne vraca
-	public HomePage (WebDriver driver){
-		this.driver = driver;
-		Sleeper.sleepTightInSeconds(5);
-		PageFactory.initElements(driver, this);
+	@FindBy(id = "shortsearchbox")
+	private WebElement searchInputField;
+
+	// @FindBy(css = "input[type= 'submit'][value= 'Go']")
+	@FindBy(xpath = "//input[contains(@value, 'Go') and contains(@type, 'submit')]")
+	private WebElement goButton;
+
+	@FindBy(xpath = "//a[contains(@title, 'My Account')]")
+	private WebElement myAccountLink;
+
+	@FindBy(css = "a[title = 'My Profile']")
+	private WebElement myProfileLink;
+
+	@FindBy(css = "a[title = 'Endava University']")
+	private WebElement endavaUniversityLink;
+
+	@FindBy(css = "a[title = 'Internal systems self help']")
+	private WebElement internalSystemSelfHelpLink;
+
+	private By goBtn = new ByXPath("//input[contains(@value, 'Go') and contains(@type, 'submit')]");
+	private By bySearchInputField = new By.ById("shortsearchbox");
+
+	public HomePage(WebDriver driver) {
+		super(driver);
+		waitForPageToBeLoaded(driver, goBtn, Property.TIME_SHORT);
+		/*
+		 * Verovatno se pritate gde su one linije koda??? Kada nasledimo Page.java
+		 * klasu nasledjujemo i konstruktor kao sti smo i uradili: pozvali smo :
+		 * super(driver); Ako odete u Page.java klasu videcete da smo tamo
+		 * stavili u konstruktor PageFactory.initElements(driver, this); - sto
+		 * ce inicijalizovati sve elemente pod klase gde je konstruktor super
+		 * klase pozvan.
+		 * 
+		 * Pogledajte i LoginPage.java konstruktor.
+		 */
 	}
-	
-	@FindBy(linkText = "Career Development Discussion")
-	private WebElement cddLink;
-	
-	
+
 	/**
-	 * Type search value into searh field
-	 * @param value string
-	 * @return HomePage
+	 * Type search value into search field
+	 * 
+	 * @param value
+	 *            {String}
+	 * @return {HomePage}
 	 */
-	public HomePage typeSearchValueIntoSearchField(String value){
-		searhInputField.sendKeys(value);
+	public HomePage typeSearchValueIntoSearchField(String value) {
+		System.out.println("typeSearchValueIntoSearchField(" + value + ")");
+		Wait.untilWebElementPresent(driver, bySearchInputField, Property.TIME_SHORT);
+		searchInputField.sendKeys(value);
 		return this;
 	}
-	
-	public SearchResultPage clickOnGoButton(){
-		//goButton.click();
-		JavascriptExecutor executor = (JavascriptExecutor)driver;
+
+	/**
+	 * Click on go button
+	 * @return {SearchResultPage}
+	 */
+	public SearchResultPage clickOnGoButton() {
+		System.out.println("clickOnGoButton()");
+		// goButton.click();
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();", goButton);
 		return new SearchResultPage(driver);
-		
 	}
-	public String getTextFromLogInfoLabel(){
-		loginInfoLabel.getText();
-		return loginInfoLabel.getText();
-	}
-	
-	public HomePage clickOnMyAccount(){
-		MyAccount.click();
+
+	/**
+	 * Click on dropdown menu my account
+	 * 
+	 * @return {HomePage}
+	 */
+	public HomePage clickOnMyAccount() {
+		myAccountLink.click();
 		return this;
+
 	}
-	
-	
-	public MyProfilePage clickOnMyProfile(){
-		MyProfile.click();
+
+	/**
+	 * Click on dropdown menu my profile
+	 * 
+	 * @return {MyProfilePage}
+	 */
+	public MyProfilePage clickOnMyProfile() {
+		myProfileLink.click();
 		return new MyProfilePage(driver);
+
 	}
-	
-	public HomePage clickOnEndavaUniversity(){
-		EndavaUniversity.click();
+
+	/**
+	 * Click on dropdown menu endava university
+	 * 
+	 * @return{HomePage}
+	 */
+	public HomePage clickOnEndavaUniversity() {
+		endavaUniversityLink.click();
 		return this;
+
 	}
-	
-	public HomePage clickOnInternal(){
-		InternaSystemsSelfHelp.click();
-		return this;
+
+	/**
+	 * Click on dropdown menu internal system self help
+	 * 
+	 * @return{InternalSystemPage}
+	 */
+	public InternalSystemPage clickOnInternalSystemSelfHelpLink() {
+		internalSystemSelfHelpLink.click();
+		return new InternalSystemPage(driver);
 	}
+
 }
